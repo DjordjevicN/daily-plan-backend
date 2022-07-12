@@ -15,7 +15,10 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
+
+// Test route
 app.get("/", (req, res) => {
+  // const sqlInsert = "insert into plan (user_id, plan_no) values ('1', '1')";
   const sqlInsert = "select * from user";
   db.query(sqlInsert, (err, result) => {
     res.send(result);
