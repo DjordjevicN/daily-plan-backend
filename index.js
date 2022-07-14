@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const db = mysql.createPool({
   host: "localhost",
   user: "root",
-  password: "djalokin3223",
+  password: "",
   database: "mealplan",
 });
 app.use(cors());
@@ -18,13 +18,79 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Test route
 app.get("/", (req, res) => {
-  // const sqlInsert = "insert into plan (user_id, plan_no) values ('1', '1')";
-  const sqlInsert = "select * from user";
+  console.log("text");
+  // const sqlInsert = `select * from ingredients`;
+  // db.query(sqlInsert, (err, results) => {
+  //   if (err) {
+  //     res.json({ msg: "Failed to load", success: false });
+  //     throw err;
+  //   }
+  //   res.json({ msg: "Load all ingredients", success: true, results });
+  // });
+});
+
+// INGREDIENTS
+
+// ADD ING
+app.post("/add_ingredients", (req, res) => {
+  const {
+    name,
+    price,
+    calories,
+    carbs,
+    protein,
+    fat,
+    img,
+    base_amount,
+    current_amount,
+  } = req.body;
+  let sqlInsert = `INSERT INTO ingredients SET
+  name="${name}",
+  price=${price},
+  calories=${calories},
+  carbs=${carbs},
+  protein=${protein},
+  fat=${fat},
+  img="${img}",
+  base_amount=${base_amount},
+  current_amount=${current_amount}`;
+
   db.query(sqlInsert, (err, result) => {
     res.send(result);
-    console.log(err);
-    console.log(result);
   });
+});
+
+// DELETE ING
+app.post("/delete_ing", (req, res) => {
+  let sqlInsert = `DELETE FROM ingredients WHERE id=${req.body.value}`;
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
+
+// GET ALL ING
+app.get("/get_all_ingredients", (req, res) => {
+  const sqlInsert = `select * from ingredients`;
+  db.query(sqlInsert, (err, results) => {
+    if (err) {
+      res.json({ msg: "Failed to load", success: false });
+      throw err;
+    }
+    res.json({ msg: "Load all ingredients", success: true, results });
+  });
+});
+
+// ADD AMOUNT aka PURCHASE MADE
+app.get("/purchase_made", (req, res) => {
+  // let sqlInsert = `UPDATE ingredients SET current_amount=1000 WHERE id=6`;
+  // db.query(sqlInsert, (err, result) => {
+  //   res.send(result);
+  //   console.log(err);
+  //   console.log(result);
+  // });
 });
 
 app.listen(3001),
