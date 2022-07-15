@@ -3,13 +3,19 @@ const app = express();
 const mysql = require("mysql2");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-
+const port = process.env.PORT || 3001;
 const db = mysql.createPool({
   host: "localhost",
-  user: "root",
-  password: "",
-  database: "mealplan",
+  user: "nikoladj_meal_plan_consumer",
+  password: "djalokin3223",
+  database: "nikoladj_meal_plan_db",
 });
+// const db = mysql.createPool({
+//   host: "localhost",
+//   user: "root",
+//   password: "",
+//   database: "mealplan",
+// });
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Test route
 app.get("/", (req, res) => {
   console.log("text");
+  res.send("radi");
   // const sqlInsert = `select * from ingredients`;
   // db.query(sqlInsert, (err, results) => {
   //   if (err) {
@@ -129,7 +136,6 @@ app.post("/edit_ingredients", (req, res) => {
   });
 });
 
-app.listen(3001),
-  () => {
-    console.log("running on port 3001");
-  };
+app.listen(port, () => {
+  console.log(`Listening on ${port}`);
+});
