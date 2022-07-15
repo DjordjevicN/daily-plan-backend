@@ -43,6 +43,7 @@ app.post("/add_ingredients", (req, res) => {
     img,
     base_amount,
     current_amount,
+    percentage_amount,
   } = req.body;
   let sqlInsert = `INSERT INTO ingredients SET
   name="${name}",
@@ -53,7 +54,8 @@ app.post("/add_ingredients", (req, res) => {
   fat=${fat},
   img="${img}",
   base_amount=${base_amount},
-  current_amount=${current_amount}`;
+  current_amount=${current_amount},
+  percentage_amount=${percentage_amount}`;
 
   db.query(sqlInsert, (err, result) => {
     res.send(result);
@@ -84,13 +86,47 @@ app.get("/get_all_ingredients", (req, res) => {
 });
 
 // ADD AMOUNT aka PURCHASE MADE
-app.get("/purchase_made", (req, res) => {
-  // let sqlInsert = `UPDATE ingredients SET current_amount=1000 WHERE id=6`;
-  // db.query(sqlInsert, (err, result) => {
-  //   res.send(result);
-  //   console.log(err);
-  //   console.log(result);
-  // });
+app.post("/purchase_made", (req, res) => {
+  let sqlInsert = `UPDATE ingredients SET current_amount=${req.body.value.amount} WHERE id = ${req.body.value.id}`;
+
+  db.query(sqlInsert, (err, result) => {
+    res.send(result);
+    console.log(err);
+    console.log(result);
+  });
+});
+
+app.post("/edit_ingredients", (req, res) => {
+  const {
+    id,
+    name,
+    price,
+    calories,
+    carbs,
+    protein,
+    fat,
+    img,
+    base_amount,
+    current_amount,
+    percentage_amount,
+  } = req.body.value;
+  let sqlInsert = `UPDATE ingredients SET
+  name="${name}",
+  price=${price},
+  calories=${calories},
+  carbs=${carbs},
+  protein=${protein},
+  fat=${fat},
+  img="${img}",
+  base_amount=${base_amount},
+  current_amount=${current_amount},
+  percentage_amount=${percentage_amount} WHERE id=${id}`;
+
+  db.query(sqlInsert, (err, result) => {
+    res.send(result);
+    console.log(err);
+    console.log(result);
+  });
 });
 
 app.listen(3001),
