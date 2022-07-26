@@ -57,6 +57,17 @@ router.get("/get_all_ingredients", (req, res) => {
     res.json({ msg: "Load all ingredients", success: true, results });
   });
 });
+// GET ING BY NAME
+router.post("/get_ingredient_by_name", (req, res) => {
+  const sqlInsert = `select * from ingredients WHERE name LIKE  '${req.body.value}%'`;
+  db.query(sqlInsert, (err, results) => {
+    if (err) {
+      res.json({ msg: "Failed to load", success: false });
+      throw err;
+    }
+    res.json({ msg: "Load all ingredients", success: true, results });
+  });
+});
 
 // ADD AMOUNT aka PURCHASE MADE
 router.post("/purchase_made", (req, res) => {
