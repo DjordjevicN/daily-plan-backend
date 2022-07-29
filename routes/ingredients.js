@@ -12,7 +12,6 @@ router.post("/add_ingredients", (req, res) => {
     carbs,
     protein,
     fat,
-    img,
     base_amount,
     current_amount,
     percentage_amount,
@@ -24,7 +23,6 @@ router.post("/add_ingredients", (req, res) => {
     carbs=${carbs},
     protein=${protein},
     fat=${fat},
-    img="${img}",
     base_amount=${base_amount},
     current_amount=${current_amount},
     percentage_amount=${percentage_amount}`;

@@ -35,6 +35,8 @@ app.get("/", (req, res) => {
 });
 
 app.post("/picture", async (req, res) => {
+  console.log(req.files);
+
   try {
     if (!req.files) {
       res.send({
@@ -43,11 +45,11 @@ app.post("/picture", async (req, res) => {
       });
     } else {
       const { picture } = req.files;
-      const id = req.body.newIng;
+      const id = req.body.itemId;
       let randomNumber = Math.floor(Math.random() * Math.floor(10));
       let pictureName = `${randomNumber}${picture.name}`;
 
-      let sql = `UPDATE ${database_constants.INGREDIENTS} SET img="${pictureName}" WHERE id = 44`;
+      let sql = `UPDATE ${req.body.tableName} SET img="${pictureName}" WHERE id = ${id}`;
       let query = db.query(sql, (err, results) => {
         if (err) {
           res.send({ status: false, notification: "Fail to upload" });
@@ -176,8 +178,7 @@ app.post("/create_meal", (req, res) => {
   let sqlInsert = `INSERT INTO meal SET
     name="${name}",
     user_id="${user_id}",
-    videoUrl="${videoUrl}",
-    img="${image}"`;
+    videoUrl="${videoUrl}"`;
 
   db.query(sqlInsert, (err, result) => {
     if (err) {
@@ -189,7 +190,9 @@ app.post("/create_meal", (req, res) => {
 app.post("/ingredient_in_meal", (req, res) => {
   let sqlInsert = `INSERT INTO ingredients_in_meal SET
     meal_id="${req.body.data.meal_id}",
-    ingredient_id="${req.body.data.ingredientId}"`;
+    ingredient_id="${req.body.data.ingredientId}",
+    unit="${req.body.data.unit}",
+    amount="${req.body.data.amount}"`;
 
   db.query(sqlInsert, (err, result) => {
     if (err) {
@@ -233,6 +236,16 @@ app.post("/get_meals_ingredients", (req, res) => {
 });
 app.post("/get_meals_steps", (req, res) => {
   let sqlInsert = `SELECT * FROM meal_steps WHERE meal_id=${req.body.value}`;
+
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
+app.post("/delete_meal", (req, res) => {
+  let sqlInsert = `DELETE FROM meal WHERE id=${req.body.value.mealId}`;
 
   db.query(sqlInsert, (err, result) => {
     if (err) {
