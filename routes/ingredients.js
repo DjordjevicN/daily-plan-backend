@@ -76,7 +76,6 @@ router.post("/purchase_made", (req, res) => {
   db.query(sqlInsert, (err, result) => {
     res.send(result);
     console.log(err);
-    console.log(result);
   });
 });
 

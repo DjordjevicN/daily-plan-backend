@@ -36,6 +36,7 @@ module.exports = mysql.createPool({
 //       name varchar(100),
 //       price INT,
 //       calories INT,
+//       barcode varchar(255),
 //       carbs INT,
 //       protein INT,
 //       fat INT,
@@ -81,6 +82,7 @@ module.exports = mysql.createPool({
 //       name varchar(100),
 //       price INT,
 //       calories INT,
+//       barcode varchar(255),
 //       carbs INT,
 //       protein INT,
 //       fat INT,
@@ -92,13 +94,22 @@ module.exports = mysql.createPool({
 //       FOREIGN KEY(recipe_id) REFERENCES recipe(id)
 //   );
 
-// create table recipe_steps(
+// create table meal_steps(
 // 	id int AUTO_INCREMENT,
-//     recipe_id int,
+//     meal_id int,
 //     title varchar(255),
 //     description text,
 //     video blob,
 //     image blob,
 //     PRIMARY key(id),
-//     FOREIGN KEY(recipe_id) REFERENCES recipe(id)
+//     FOREIGN KEY(meal_id) REFERENCES meal(id) ON DELETE CASCADE ON UPDATE CASCADE
+// );
+
+// create table ingredients_in_meal(
+// 	   id int AUTO_INCREMENT,
+//     meal_id int,
+//     ingredient_id int,
+//     PRIMARY key(id),
+//     FOREIGN KEY(meal_id) REFERENCES meal(id)
+//     FOREIGN KEY(ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE ON UPDATE CASCADE
 // );
