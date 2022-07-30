@@ -1,31 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../database");
+const database_constants = require("../constants/database_constants");
 // INGREDIENTS
 
 // ADD ING
 router.post("/add_ingredients", (req, res) => {
-  const {
-    name,
-    price,
-    calories,
-    carbs,
-    protein,
-    fat,
-    base_amount,
-    current_amount,
-    percentage_amount,
-  } = req.body;
-  let sqlInsert = `INSERT INTO ingredients SET
+  const { name, price, calories, carbs, protein, fat } = req.body;
+  let sqlInsert = `INSERT INTO ${database_constants.INGREDIENTS} SET
     name="${name}",
     price=${price},
     calories=${calories},
     carbs=${carbs},
     protein=${protein},
-    fat=${fat},
-    base_amount=${base_amount},
-    current_amount=${current_amount},
-    percentage_amount=${percentage_amount}`;
+    fat=${fat}`;
 
   db.query(sqlInsert, (err, result) => {
     console.log(err);
@@ -35,7 +23,7 @@ router.post("/add_ingredients", (req, res) => {
 
 // DELETE ING
 router.post("/delete_ing", (req, res) => {
-  let sqlInsert = `DELETE FROM ingredients WHERE id=${req.body.value}`;
+  let sqlInsert = `DELETE FROM ${database_constants.INGREDIENTS} WHERE id=${req.body.value}`;
   db.query(sqlInsert, (err, result) => {
     if (err) {
       console.log(err);
@@ -46,7 +34,7 @@ router.post("/delete_ing", (req, res) => {
 
 // GET ALL ING
 router.get("/get_all_ingredients", (req, res) => {
-  const sqlInsert = `select * from ingredients ORDER BY name`;
+  const sqlInsert = `select * from ${database_constants.INGREDIENTS} ORDER BY name`;
   db.query(sqlInsert, (err, results) => {
     if (err) {
       res.json({ msg: "Failed to load", success: false });
@@ -57,7 +45,7 @@ router.get("/get_all_ingredients", (req, res) => {
 });
 // GET ING BY NAME
 router.post("/get_ingredient_by_name", (req, res) => {
-  const sqlInsert = `select * from ingredients WHERE name LIKE  '${req.body.value}%'`;
+  const sqlInsert = `select * from ${database_constants.INGREDIENTS} WHERE name LIKE  '${req.body.value}%'`;
   db.query(sqlInsert, (err, results) => {
     if (err) {
       res.json({ msg: "Failed to load", success: false });
@@ -69,7 +57,7 @@ router.post("/get_ingredient_by_name", (req, res) => {
 
 // ADD AMOUNT aka PURCHASE MADE
 router.post("/purchase_made", (req, res) => {
-  let sqlInsert = `UPDATE ingredients SET current_amount=${req.body.value.amount} WHERE id = ${req.body.value.id}`;
+  let sqlInsert = `UPDATE ${database_constants.INGREDIENTS} SET current_amount=${req.body.value.amount} WHERE id = ${req.body.value.id}`;
 
   db.query(sqlInsert, (err, result) => {
     res.send(result);
@@ -91,7 +79,7 @@ router.post("/edit_ingredients", (req, res) => {
     current_amount,
     percentage_amount,
   } = req.body.value;
-  let sqlInsert = `UPDATE ingredients SET
+  let sqlInsert = `UPDATE ${database_constants.INGREDIENTS} SET
     name="${name}",
     price=${price},
     calories=${calories},

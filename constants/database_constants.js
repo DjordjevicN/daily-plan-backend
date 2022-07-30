@@ -1,10 +1,9 @@
 module.exports = database_constants = {
   INGREDIENTS: "ingredients",
-  USERS_INGREDIENTS: "users_ingredients",
-  DAY: "day",
+  INGREDIENTS_IN_MEAL: "ingredients_in_meal",
   MEAL: "meal",
   PLAN: "plan",
   RECIPE: "recipe",
-  RECIPE_STEPS: "recipe_steps",
+  MEAL_STEPS: "meal_steps",
   USERS: "users",
 };
