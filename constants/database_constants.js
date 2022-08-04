@@ -6,4 +6,6 @@ module.exports = database_constants = {
   RECIPE: "recipe",
   MEAL_STEPS: "meal_steps",
   USERS: "users",
+  DAY: "day",
+  MEAL_IN_DAY: "meal_in_day",
 };

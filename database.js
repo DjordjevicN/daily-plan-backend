@@ -1,4 +1,5 @@
 const mysql = require("mysql2");
+const { PLAN } = require("./constants/database_constants");
 
 // module.exports = mysql.createPool({
 //   host: "localhost",
@@ -20,10 +21,11 @@ module.exports = mysql.createPool({
 // name VARCHAR(255),
 // weight INT,
 // height INT,
+// plan_id INT,
 // bmi INT,
 // gender varchar(255),
 // age INT,
-// image blob,
+// image varchar(255),
 // calories_needed INT,
 // job_type varchar(255),
 // fat int,
@@ -40,7 +42,7 @@ module.exports = mysql.createPool({
 //       carbs INT,
 //       protein INT,
 //       fat INT,
-//       img BLOB,
+//       img varchar(255),
 //       base_amount INT,
 //       current_amount INT,
 //       percentage_amount INT,
@@ -58,7 +60,7 @@ module.exports = mysql.createPool({
 //       carbs INT,
 //       protein INT,
 //       fat INT,
-//       img BLOB,
+//       img varchar(255),
 //       base_amount INT,
 //       current_amount INT,
 //       percentage_amount INT,
@@ -86,7 +88,7 @@ module.exports = mysql.createPool({
 //       carbs INT,
 //       protein INT,
 //       fat INT,
-//       img BLOB,
+//       img varchar(255),
 //       base_amount INT,
 //       current_amount INT,
 //       percentage_amount INT,
@@ -99,8 +101,8 @@ module.exports = mysql.createPool({
 //     meal_id int,
 //     title varchar(255),
 //     description text,
-//     video blob,
-//     image blob,
+//     video varchar(255),
+//     image varchar(255),
 //     PRIMARY key(id),
 //     FOREIGN KEY(meal_id) REFERENCES meal(id) ON DELETE CASCADE ON UPDATE CASCADE
 // );
@@ -110,6 +112,43 @@ module.exports = mysql.createPool({
 //     meal_id int,
 //     ingredient_id int,
 //     PRIMARY key(id),
-//     FOREIGN KEY(meal_id) REFERENCES meal(id)
+//     FOREIGN KEY(meal_id) REFERENCES meal(id),
 //     FOREIGN KEY(ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE ON UPDATE CASCADE
 // );
+
+// create table day(
+// 	   id int AUTO_INCREMENT,
+//     plan_id int,
+//     date_id int,
+//     calorie_limit int,
+//     name varchar(255),
+//     PRIMARY key(id),
+//     FOREIGN KEY(plan_id) REFERENCES plan(id)
+//     ON DELETE CASCADE ON UPDATE CASCADE
+// );
+
+// create table meal_in_day(
+//   id int AUTO_INCREMENT,
+//   meal_id int,
+//   day_id int,
+//   meal_type int,
+//   amount int DEFAULT 1,
+//   unit varchar(20) DEFAULT "gr",
+//   PRIMARY key(id),
+//   FOREIGN KEY(meal_id) REFERENCES meal(id),
+//   FOREIGN KEY(day_id) REFERENCES day(id)
+//   ON DELETE CASCADE ON UPDATE CASCADE
+// )
+
+// create table plan(
+//   planID int AUTO_INCREMENT,
+//   name varchar(100),
+//   price INT,
+//   calories INT,
+//   carbs INT,
+//   protein INT,
+//   fat INT,
+//   img varchar(255),
+//   PRIMARY key(planID),
+//   ON DELETE CASCADE ON UPDATE CASCADE
+// )

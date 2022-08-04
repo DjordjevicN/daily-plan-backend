@@ -111,5 +111,46 @@ router.post("/get_user_by_id", (req, res) => {
     console.log(error);
   }
 });
+// GET USERS PLAN
+router.post("/get_users_plan", (req, res) => {
+  let sql = `SELECT * FROM ${database_constants.PLAN} WHERE id = '${req.body.value}'`;
+  try {
+    let query = db.query(sql, async (err, results) => {
+      res.json(results);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+// GET USERS PLAN-DAY
+router.post("/get_plan_days", (req, res) => {
+  let sql = `SELECT * FROM ${database_constants.DAY} WHERE plan_id = '${req.body.value}' ORDER BY  weekDay_id ASC`;
+  try {
+    let query = db.query(sql, async (err, results) => {
+      res.json(results);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+// GET USERS PLAN-DAY-MEAL
+router.post("/get_meals_in_day", (req, res) => {
+  let sqlInsert = `SELECT * FROM meal_in_day where day_id=${req.body.value} ORDER BY  meal_type ASC`;
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
+router.post("/get_meal_by_id", (req, res) => {
+  let sqlInsert = `SELECT * FROM meal where meal_id=${req.body.value}`;
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
 
 module.exports = router;

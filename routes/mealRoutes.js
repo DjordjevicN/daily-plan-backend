@@ -20,6 +20,23 @@ router.post("/create_meal", (req, res) => {
     res.send(result);
   });
 });
+// UPDATE MEAL
+router.post("/update_meal", (req, res) => {
+  const { user_id, name, videoUrl, id } = req.body.mealInfo;
+
+  let sqlInsert = `UPDATE ${database_constants.MEAL} SET
+      name="${name}",
+      user_id="${user_id}",
+      videoUrl="${videoUrl}" WHERE id=${id}`;
+
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
+
 router.post("/ingredient_in_meal", (req, res) => {
   let sqlInsert = `INSERT INTO ${database_constants.INGREDIENTS_IN_MEAL} SET
       meal_id="${req.body.data.meal_id}",
@@ -34,6 +51,29 @@ router.post("/ingredient_in_meal", (req, res) => {
     res.send(result);
   });
 });
+
+router.post("/delete_ingredients_in_meal", (req, res) => {
+  let sqlInsert = `DELETE FROM ${database_constants.INGREDIENTS_IN_MEAL} WHERE meal_id=${req.body.value}`;
+
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
+
+router.post("/delete_meal_steps", (req, res) => {
+  let sqlInsert = `DELETE FROM ${database_constants.MEAL_STEPS} WHERE meal_id=${req.body.value}`;
+
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
+
 router.post("/add_meal_step", (req, res) => {
   let sqlInsert = `INSERT INTO ${database_constants.MEAL_STEPS} SET
       meal_id="${req.body.data.meal_id}",
@@ -57,6 +97,20 @@ router.post("/get_users_meals", (req, res) => {
     res.send(result);
   });
 });
+
+router.post("/update_amount_and_unit_of_meal", (req, res) => {
+  console.log(req.body.value);
+  let sqlInsert = `UPDATE ${database_constants.MEAL_IN_DAY} SET amount="${req.body.value.amount}",
+  unit="${req.body.value.unit}" WHERE id=${req.body.value.id}`;
+
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
+
 router.post("/get_meals_ingredients", (req, res) => {
   let sqlInsert = `SELECT * FROM ${database_constants.INGREDIENTS_IN_MEAL} JOIN ${database_constants.INGREDIENTS} ON ingredient_id = ingredients.id WHERE meal_id=${req.body.value}`;
 
@@ -67,6 +121,7 @@ router.post("/get_meals_ingredients", (req, res) => {
     res.send(result);
   });
 });
+
 router.post("/get_meals_steps", (req, res) => {
   let sqlInsert = `SELECT * FROM ${database_constants.MEAL_STEPS} WHERE meal_id=${req.body.value} ORDER BY title ASC`;
 
@@ -79,6 +134,56 @@ router.post("/get_meals_steps", (req, res) => {
 });
 router.post("/delete_meal", (req, res) => {
   let sqlInsert = `DELETE FROM meal WHERE id=${req.body.value.mealId}`;
+
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
+router.post("/get_meal_by_name_type", (req, res) => {
+  let sqlInsert = `SELECT * FROM meal WHERE name LIKE "${req.body.value.searchValue}%"`;
+
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
+router.post("/add_meal_to_day", (req, res) => {
+  console.log("ADD MEAL TO DAY");
+  console.log(req.body.value);
+  let sqlInsert = `INSERT INTO ${database_constants.MEAL_IN_DAY} SET
+  meal_id="${req.body.value.meal_id}",
+  day_id="${req.body.value.day_id}"`;
+
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
+router.post("/update_meal_to_day", (req, res) => {
+  console.log("UPDATE");
+  console.log(req.body.value);
+
+  let sqlInsert = `UPDATE ${database_constants.MEAL_IN_DAY} SET
+  meal_id="${req.body.value.meal_id}" WHERE id=${req.body.value.id} `;
+
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
+router.post("/check_if_meal_to_day", (req, res) => {
+  console.log("CHECK");
+  console.log(req.body.dayId);
+  let sqlInsert = `SELECT * FROM ${database_constants.MEAL_IN_DAY} WHERE id=${req.body.dayId}`;
 
   db.query(sqlInsert, (err, result) => {
     if (err) {

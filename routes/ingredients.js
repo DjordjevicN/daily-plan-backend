@@ -66,19 +66,8 @@ router.post("/purchase_made", (req, res) => {
 });
 
 router.post("/edit_ingredients", (req, res) => {
-  const {
-    id,
-    name,
-    price,
-    calories,
-    carbs,
-    protein,
-    fat,
-    img,
-    base_amount,
-    current_amount,
-    percentage_amount,
-  } = req.body.value;
+  const { id, name, price, calories, carbs, protein, fat, img } =
+    req.body.value;
   let sqlInsert = `UPDATE ${database_constants.INGREDIENTS} SET
     name="${name}",
     price=${price},
@@ -86,10 +75,7 @@ router.post("/edit_ingredients", (req, res) => {
     carbs=${carbs},
     protein=${protein},
     fat=${fat},
-    img="${img}",
-    base_amount=${base_amount},
-    current_amount=${current_amount},
-    percentage_amount=${percentage_amount} WHERE id=${id}`;
+    img="${img}" WHERE id=${id}`;
 
   db.query(sqlInsert, (err, result) => {
     res.send(result);

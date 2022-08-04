@@ -27,8 +27,6 @@ app.use(userRoutes);
 app.use(mealRoutes);
 
 app.post("/picture", async (req, res) => {
-  console.log(req.files);
-
   try {
     if (!req.files) {
       res.send({
@@ -56,7 +54,51 @@ app.post("/picture", async (req, res) => {
   }
 });
 
-// USERS ROUTES
+// CREATE PLAN
+// ********************
+app.post("/create_plan", (req, res) => {
+  let sql = `INSERT INTO ${database_constants.PLAN} SET name="new"`;
+
+  let query = db.query(sql, async (err, results) => {
+    if (err) {
+      return console.log(err);
+    }
+    res.json(results);
+  });
+});
+app.post("/create_day", (req, res) => {
+  let sql = `INSERT INTO ${database_constants.DAY} SET weekDay_id="${req.body.weekDay_id}",plan_id="${req.body.plan_id}"`;
+
+  let query = db.query(sql, async (err, results) => {
+    if (err) {
+      return console.log(err);
+    }
+    res.json(results);
+  });
+});
+
+app.post("/create_meal_in_day", (req, res) => {
+  let sql = `INSERT INTO ${database_constants.MEAL_IN_DAY} SET day_id="${req.body.day_id}",meal_type="${req.body.meal_type}",amount="1",unit="gr"`;
+
+  let query = db.query(sql, async (err, results) => {
+    if (err) {
+      return console.log(err);
+    }
+    res.json(results);
+  });
+});
+// *****************
+
+app.post("/get_plan_by_id", (req, res) => {
+  let sql = `SELECT * FROM plan WHERE id=${req.body.value}`;
+
+  let query = db.query(sql, async (err, results) => {
+    if (err) {
+      return console.log(err);
+    }
+    res.json(results);
+  });
+});
 
 app.listen(port, () => {
   console.log(`Listening on ${port}`);
