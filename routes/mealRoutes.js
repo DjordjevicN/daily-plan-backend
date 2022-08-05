@@ -88,7 +88,8 @@ router.post("/add_meal_step", (req, res) => {
   });
 });
 router.post("/get_users_meals", (req, res) => {
-  let sqlInsert = `SELECT * FROM ${database_constants.MEAL} WHERE user_id="${req.body.value}"`;
+  let sqlInsert = `SELECT * FROM ${database_constants.MEAL}`;
+  // let sqlInsert = `SELECT * FROM ${database_constants.MEAL} WHERE user_id="${req.body.value}"`;
 
   db.query(sqlInsert, (err, result) => {
     if (err) {

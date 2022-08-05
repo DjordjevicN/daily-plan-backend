@@ -152,5 +152,14 @@ router.post("/get_meal_by_id", (req, res) => {
     res.send(result);
   });
 });
+router.post("/update_users_calories", (req, res) => {
+  let sqlInsert = `UPDATE ${database_constants.USERS} SET calories_needed="${req.body.value.calories}" where id=${req.body.value.userId}`;
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
 
 module.exports = router;
