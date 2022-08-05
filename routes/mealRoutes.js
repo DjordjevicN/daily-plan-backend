@@ -185,5 +185,15 @@ router.post("/check_if_meal_to_day", (req, res) => {
     res.send(result);
   });
 });
+router.post("/get_todays_meals", (req, res) => {
+  let sqlInsert = `SELECT * FROM ${database_constants.DAY} WHERE weekDay_id=${req.body.value.weekDay_id} AND plan_id=${req.body.value.plan_id}`;
+
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
 
 module.exports = router;
