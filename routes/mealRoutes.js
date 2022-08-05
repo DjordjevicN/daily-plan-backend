@@ -99,7 +99,6 @@ router.post("/get_users_meals", (req, res) => {
 });
 
 router.post("/update_amount_and_unit_of_meal", (req, res) => {
-  console.log(req.body.value);
   let sqlInsert = `UPDATE ${database_constants.MEAL_IN_DAY} SET amount="${req.body.value.amount}",
   unit="${req.body.value.unit}" WHERE id=${req.body.value.id}`;
 
@@ -142,7 +141,7 @@ router.post("/delete_meal", (req, res) => {
     res.send(result);
   });
 });
-router.post("/get_meal_by_name_type", (req, res) => {
+router.post("/get_meal_by_name", (req, res) => {
   let sqlInsert = `SELECT * FROM meal WHERE name LIKE "${req.body.value.searchValue}%"`;
 
   db.query(sqlInsert, (err, result) => {
@@ -153,8 +152,6 @@ router.post("/get_meal_by_name_type", (req, res) => {
   });
 });
 router.post("/add_meal_to_day", (req, res) => {
-  console.log("ADD MEAL TO DAY");
-  console.log(req.body.value);
   let sqlInsert = `INSERT INTO ${database_constants.MEAL_IN_DAY} SET
   meal_id="${req.body.value.meal_id}",
   day_id="${req.body.value.day_id}"`;
@@ -167,9 +164,6 @@ router.post("/add_meal_to_day", (req, res) => {
   });
 });
 router.post("/update_meal_to_day", (req, res) => {
-  console.log("UPDATE");
-  console.log(req.body.value);
-
   let sqlInsert = `UPDATE ${database_constants.MEAL_IN_DAY} SET
   meal_id="${req.body.value.meal_id}" WHERE id=${req.body.value.id} `;
 
@@ -181,8 +175,6 @@ router.post("/update_meal_to_day", (req, res) => {
   });
 });
 router.post("/check_if_meal_to_day", (req, res) => {
-  console.log("CHECK");
-  console.log(req.body.dayId);
   let sqlInsert = `SELECT * FROM ${database_constants.MEAL_IN_DAY} WHERE id=${req.body.dayId}`;
 
   db.query(sqlInsert, (err, result) => {

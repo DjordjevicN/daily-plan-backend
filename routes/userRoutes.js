@@ -144,7 +144,7 @@ router.post("/get_meals_in_day", (req, res) => {
   });
 });
 router.post("/get_meal_by_id", (req, res) => {
-  let sqlInsert = `SELECT * FROM meal where meal_id=${req.body.value}`;
+  let sqlInsert = `SELECT * FROM meal where id=${req.body.value}`;
   db.query(sqlInsert, (err, result) => {
     if (err) {
       console.log(err);
