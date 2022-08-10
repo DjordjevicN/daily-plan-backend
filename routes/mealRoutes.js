@@ -215,5 +215,17 @@ router.post("/get_todays_meals", (req, res) => {
     res.send(result);
   });
 });
+// GET TODAYS MEAL
+router.post("/update_meal_in_day", (req, res) => {
+  let sqlInsert = `SELECT * FROM ${database_constants.MEAL_IN_DAY} WHERE id=${req.body.value.id}`;
+
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+
+    res.send(result);
+  });
+});
 
 module.exports = router;
