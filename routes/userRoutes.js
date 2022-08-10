@@ -10,33 +10,11 @@ router.get("/test", (req, res) => {
 
 // CREATE USER
 router.post("/create_user", (req, res) => {
-  const {
-    email,
-    password,
-    name,
-    weight,
-    height,
-    bmi,
-    gender,
-    age,
-    image,
-    calories_needed,
-    fat,
-    activity_level,
-  } = req.body;
+  const { email, password, name } = req.body;
   let sqlInsert = `INSERT INTO ${database_constants.USERS} SET
       name="${name}",
       email="${email}",
-      password="${password}",
-      weight=${weight},
-      height=${height},
-      bmi=${bmi},
-      gender="${gender}",
-      age=${age},
-      image="${image}",
-      calories_needed=${calories_needed},
-      fat=${fat},
-      activity_level="${activity_level}"`;
+      password="${password}"`;
 
   db.query(sqlInsert, (err, result) => {
     if (err) {
@@ -154,6 +132,17 @@ router.post("/get_meal_by_id", (req, res) => {
 });
 router.post("/update_users_calories", (req, res) => {
   let sqlInsert = `UPDATE ${database_constants.USERS} SET calories_needed="${req.body.value.calories}" where id=${req.body.value.userId}`;
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
+router.post("/get_users_meals", (req, res) => {
+  let sqlInsert = `SELECT * FROM ${database_constants.MEAL}`;
+  // let sqlInsert = `SELECT * FROM ${database_constants.MEAL} WHERE user_id="${req.body.value}"`;
+
   db.query(sqlInsert, (err, result) => {
     if (err) {
       console.log(err);

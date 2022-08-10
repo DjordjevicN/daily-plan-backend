@@ -64,7 +64,7 @@ router.post("/purchase_made", (req, res) => {
     console.log(err);
   });
 });
-
+// Edit ING
 router.post("/edit_ingredients", (req, res) => {
   const { id, name, price, calories, carbs, protein, fat, img } =
     req.body.value;
@@ -82,4 +82,17 @@ router.post("/edit_ingredients", (req, res) => {
     console.log(err);
   });
 });
+
+// GET INGREDIENTS BY MEAL ID
+router.post("/get_meals_ingredients", (req, res) => {
+  let sqlInsert = `SELECT * FROM ${database_constants.INGREDIENTS_IN_MEAL} JOIN ${database_constants.INGREDIENTS} ON ingredient_id = ingredients.id WHERE meal_id=${req.body.value}`;
+
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
+
 module.exports = router;

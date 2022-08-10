@@ -6,6 +6,7 @@ const fileUpload = require("express-fileupload");
 const ingredients = require("./routes/ingredients");
 const userRoutes = require("./routes/userRoutes");
 const mealRoutes = require("./routes/mealRoutes");
+const scrape = require("./routes/scrape");
 
 const db = require("./database");
 const database_constants = require("./constants/database_constants");
@@ -25,6 +26,7 @@ app.use(
 app.use(ingredients);
 app.use(userRoutes);
 app.use(mealRoutes);
+app.use(scrape);
 
 app.post("/picture", async (req, res) => {
   try {
