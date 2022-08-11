@@ -7,11 +7,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          node-version: "14.x"
+          node-version: "10.x"
       - name: Install dependencies
         run: npm install
 
@@ -19,8 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.12.12
+     uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server: ${{ secrets.ftp_server }}
           username: ${{ secrets.ftp_name }}
