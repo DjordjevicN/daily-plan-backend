@@ -12,7 +12,7 @@ const db = require("./database");
 const database_constants = require("./constants/database_constants");
 const port = process.env.PORT || 3001;
 
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));

@@ -16,10 +16,6 @@ jobs:
         with:
           node-version: "16"
 
-      - name: 🔨 Build Project
-        run: |
-          npm install
-
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
@@ -27,3 +23,7 @@ jobs:
           username: ${{ secrets.ftp_name }}
           password: ${{ secrets.ftp_password }}
           dangerous-clean-slate: true
+
+      - name: 🔨 Build Project
+        run: |
+          npm install
