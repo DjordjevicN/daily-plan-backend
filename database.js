@@ -1,18 +1,18 @@
 const mysql = require("mysql2");
-const { PLAN } = require("./constants/database_constants");
+// const { PLAN } = require("./constants/database_constants");
 
-// module.exports = mysql.createPool({
-//   host: "localhost",
-//   user: "nikoladj_meal_plan_consumer",
-//   password: "djalokin3223",
-//   database: "nikoladj_meal_plan_db",
-// });
 module.exports = mysql.createPool({
   host: "localhost",
-  user: "root",
-  password: "",
-  database: "mealplan",
+  user: "nikoladj_meal_plan_consumer",
+  password: "djalokin3223",
+  database: "nikoladj_meal_plan_db",
 });
+// module.exports = mysql.createPool({
+//   host: "localhost",
+//   user: "root",
+//   password: "",
+//   database: "mealplan",
+// });
 
 // CREATE TABLE users(
 // id INT AUTO_INCREMENT,

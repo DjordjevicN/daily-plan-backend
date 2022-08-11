@@ -1,20 +1,21 @@
 const express = require("express");
 const app = express();
-const cors = require("cors");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const ingredients = require("./routes/ingredients");
 const userRoutes = require("./routes/userRoutes");
 const mealRoutes = require("./routes/mealRoutes");
 const scrape = require("./routes/scrape");
+const cors = require("cors");
+app.use(cors());
 
 const db = require("./database");
 const database_constants = require("./constants/database_constants");
 const port = process.env.PORT || 3001;
 
-app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use("/uploads", express.static("uploads"));
 app.use(
   fileUpload({
@@ -22,7 +23,7 @@ app.use(
     // limits: { fileSize: 50 * 1024 * 1024 },
   })
 );
-// Routes
+// Routes;
 app.use(ingredients);
 app.use(userRoutes);
 app.use(mealRoutes);
@@ -58,6 +59,10 @@ app.post("/picture", async (req, res) => {
 
 // CREATE PLAN
 // ********************
+
+app.get("/", (req, res) => {
+  res.send("AJMO");
+});
 app.post("/create_plan", (req, res) => {
   let sql = `INSERT INTO ${database_constants.PLAN} SET name="new"`;
 
