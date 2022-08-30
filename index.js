@@ -5,6 +5,7 @@ const fileUpload = require("express-fileupload");
 const ingredients = require("./routes/ingredients");
 const userRoutes = require("./routes/userRoutes");
 const mealRoutes = require("./routes/mealRoutes");
+const shopping = require("./routes/shopping");
 const scrape = require("./routes/scrape");
 const cors = require("cors");
 app.use(cors());
@@ -28,6 +29,7 @@ app.use(ingredients);
 app.use(userRoutes);
 app.use(mealRoutes);
 app.use(scrape);
+app.use(shopping);
 
 app.post("/picture", async (req, res) => {
   try {
@@ -60,9 +62,6 @@ app.post("/picture", async (req, res) => {
 // CREATE PLAN
 // ********************
 
-app.get("/", (req, res) => {
-  res.send("AJMO");
-});
 app.post("/create_plan", (req, res) => {
   let sql = `INSERT INTO ${database_constants.PLAN} SET name="new"`;
 
