@@ -79,7 +79,6 @@ router.post("/delete_meal_steps", (req, res) => {
 // UPDATE SINGLE STEP
 
 router.post("/update_step", (req, res) => {
-  console.log(req.body.value);
   let sqlInsert = `UPDATE meal_steps SET title="${req.body.value.title}", description="${req.body.value.description}" WHERE id=${req.body.value.id}`;
 
   db.query(sqlInsert, (err, result) => {

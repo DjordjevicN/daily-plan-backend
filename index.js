@@ -6,6 +6,7 @@ const ingredients = require("./routes/ingredients");
 const userRoutes = require("./routes/userRoutes");
 const mealRoutes = require("./routes/mealRoutes");
 const shopping = require("./routes/shopping");
+const plan = require("./routes/plan");
 const scrape = require("./routes/scrape");
 const cors = require("cors");
 app.use(cors());
@@ -30,6 +31,7 @@ app.use(userRoutes);
 app.use(mealRoutes);
 app.use(scrape);
 app.use(shopping);
+app.use(plan);
 
 app.post("/picture", async (req, res) => {
   try {
@@ -62,16 +64,6 @@ app.post("/picture", async (req, res) => {
 // CREATE PLAN
 // ********************
 
-app.post("/create_plan", (req, res) => {
-  let sql = `INSERT INTO ${database_constants.PLAN} SET name="new"`;
-
-  let query = db.query(sql, async (err, results) => {
-    if (err) {
-      return console.log(err);
-    }
-    res.json(results);
-  });
-});
 app.post("/create_day", (req, res) => {
   let sql = `INSERT INTO ${database_constants.DAY} SET weekDay_id="${req.body.weekDay_id}",plan_id="${req.body.plan_id}"`;
 

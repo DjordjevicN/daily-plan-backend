@@ -88,7 +88,7 @@ router.post("/scrape_meals", async (req, res) => {
   const response = await axios.get(
     `https://www.eatthismuch.com/food-browser/search/?q=&filters=%5B%22basic_foods%22%5D&category_filters=%5B%5D&sort_nutrient=relevance&sort_order=-&display_option=serving_&page=${req.body.value}&nutrition_targets=null`
   );
-  console.log(response.data.status);
+
   res.send(response.data.basic_foods.results);
 });
 
