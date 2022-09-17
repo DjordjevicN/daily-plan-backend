@@ -7,7 +7,6 @@ const db = require("../database");
 router.get("/get_all_shopping_items", (req, res) => {
   let sqlInsert = `SELECT * FROM shopping `;
   db.query(sqlInsert, (err, result) => {
-    console.log(err);
     res.send(result);
   });
 });
@@ -15,7 +14,9 @@ router.get("/get_all_shopping_items", (req, res) => {
 router.post("/get_shopping_items_by_user_id", (req, res) => {
   let sqlInsert = `SELECT * FROM shopping WHERE users_id=${req.body.value}  ORDER BY  have ASC`;
   db.query(sqlInsert, (err, result) => {
-    console.log(err);
+    if (err) {
+      console.log(err);
+    }
     res.send(result);
   });
 });
@@ -30,14 +31,18 @@ router.post("/create_shopping_list_item", (req, res) => {
           have="${have}",
            users_id=${users_id}`;
   db.query(sqlInsert, (err, result) => {
-    console.log(err);
+    if (err) {
+      console.log(err);
+    }
     res.send(result);
   });
 });
 router.post("/switch_have_item", (req, res) => {
   let sqlInsert = `UPDATE shopping SET have=${req.body.value.have} WHERE id = ${req.body.value.item_id}`;
   db.query(sqlInsert, (err, result) => {
-    console.log(err);
+    if (err) {
+      console.log(err);
+    }
     res.send(result);
   });
 });
@@ -52,7 +57,9 @@ router.post("/get_all_plans_ingredients", (req, res) => {
   WHERE day.plan_id=${req.body.value} 
   GROUP BY name`;
   db.query(sqlInsert, (err, result) => {
-    console.log(err);
+    if (err) {
+      console.log(err);
+    }
     res.send(result);
   });
 });
@@ -60,7 +67,9 @@ router.post("/get_all_plans_ingredients", (req, res) => {
 router.post("/delete_single_shopping_item", (req, res) => {
   let sqlInsert = `DELETE FROM shopping WHERE id=${req.body.value.itemId}`;
   db.query(sqlInsert, (err, result) => {
-    console.log(err);
+    if (err) {
+      console.log(err);
+    }
     res.send(result);
   });
 });

@@ -7,14 +7,18 @@ const db = require("../database");
 router.get("/get_all_plans", (req, res) => {
   let sqlInsert = `SELECT * FROM plan`;
   db.query(sqlInsert, (err, result) => {
-    console.log(err);
+    if (err) {
+      console.log(err);
+    }
     res.send(result);
   });
 });
 router.get("/get_users_plans", (req, res) => {
   let sqlInsert = `SELECT * FROM plan WHERE creator_id=${req.body.value.userId}`;
   db.query(sqlInsert, (err, result) => {
-    console.log(err);
+    if (err) {
+      console.log(err);
+    }
     res.send(result);
   });
 });
@@ -22,7 +26,9 @@ router.get("/get_users_plans", (req, res) => {
 router.post("/activate_plan", (req, res) => {
   let sqlInsert = `UPDATE users SET plan_id=${req.body.value.plan_id} WHERE id=${req.body.value.userId}`;
   db.query(sqlInsert, (err, result) => {
-    console.log(err);
+    if (err) {
+      console.log(err);
+    }
     res.send(result);
   });
 });
@@ -39,14 +45,18 @@ router.post("/create_plan", (req, res) => {
 router.post("/delete_plan", (req, res) => {
   let sqlInsert = `DELETE FROM plan WHERE id=${req.body.value}`;
   db.query(sqlInsert, (err, result) => {
-    console.log(err);
+    if (err) {
+      console.log(err);
+    }
     res.send(result);
   });
 });
 router.post("/update_name", (req, res) => {
   let sqlInsert = `UPDATE plan SET name="${req.body.value.name}" WHERE id=${req.body.value.planId}`;
   db.query(sqlInsert, (err, result) => {
-    console.log(err);
+    if (err) {
+      console.log(err);
+    }
     res.send(result);
   });
 });
